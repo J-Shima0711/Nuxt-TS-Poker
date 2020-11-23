@@ -1,7 +1,40 @@
 import { FullHouse } from '~/entities/hands/FullHouse'
 import * as testData from '~/test/TestData'
 
-describe('FullHouse', () => {
+describe('Unit Test', () => {
+  test('hasThreeOfAKind() => true & pairCount() => 1', () => {
+    const hand = new FullHouse(testData.HIGH_CARD)
+    const hasThreeOfAKind = jest
+      .spyOn<any, any>(hand, 'hasThreeOfAKind')
+      .mockReturnValue(true)
+    const pairCount = jest.spyOn<any, any>(hand, 'pairCount').mockReturnValue(1)
+    expect(hand.judge()).toBeTruthy()
+    expect(hasThreeOfAKind).toHaveBeenCalledTimes(1)
+    expect(pairCount).toHaveBeenCalledTimes(1)
+  })
+  test('hasThreeOfAKind() => false & pairCount() => 1', () => {
+    const hand = new FullHouse(testData.HIGH_CARD)
+    const hasThreeOfAKind = jest
+      .spyOn<any, any>(hand, 'hasThreeOfAKind')
+      .mockReturnValue(false)
+    const pairCount = jest.spyOn<any, any>(hand, 'pairCount').mockReturnValue(1)
+    expect(hand.judge()).toBeFalsy()
+    expect(hasThreeOfAKind).toHaveBeenCalledTimes(1)
+    expect(pairCount).toHaveBeenCalledTimes(0)
+  })
+  test('hasThreeOfAKind() => true & pairCount() => 0', () => {
+    const hand = new FullHouse(testData.HIGH_CARD)
+    const hasThreeOfAKind = jest
+      .spyOn<any, any>(hand, 'hasThreeOfAKind')
+      .mockReturnValue(true)
+    const pairCount = jest.spyOn<any, any>(hand, 'pairCount').mockReturnValue(0)
+    expect(hand.judge()).toBeFalsy()
+    expect(hasThreeOfAKind).toHaveBeenCalledTimes(1)
+    expect(pairCount).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('Check all test data', () => {
   test('high card', () => {
     const hand = new FullHouse(testData.HIGH_CARD)
     expect(hand.judge()).toBeFalsy()

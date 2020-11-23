@@ -1,7 +1,26 @@
 import { Quads } from '~/entities/hands/Quads'
 import * as testData from '~/test/TestData'
 
-describe('Quads', () => {
+describe('Unit Test', () => {
+  test('exists an object with a count of 4 in aggregationOfRank()', () => {
+    const hand = new Quads(testData.HIGH_CARD)
+    const aggregationOfRank = jest
+      .spyOn<any, any>(hand, 'aggregationOfRank')
+      .mockReturnValue([{ rank: 14, count: 4 }])
+    expect(hand.judge()).toBeTruthy()
+    expect(aggregationOfRank).toHaveBeenCalledTimes(1)
+  })
+  test('does not exists an object with a count of 4 in aggregationOfRank()', () => {
+    const hand = new Quads(testData.HIGH_CARD)
+    const aggregationOfRank = jest
+      .spyOn<any, any>(hand, 'aggregationOfRank')
+      .mockReturnValue([{ rank: 14, count: 3 }])
+    expect(hand.judge()).toBeFalsy()
+    expect(aggregationOfRank).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('Check all test data', () => {
   test('high card', () => {
     const hand = new Quads(testData.HIGH_CARD)
     expect(hand.judge()).toBeFalsy()

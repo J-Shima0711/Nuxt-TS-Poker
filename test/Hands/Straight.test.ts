@@ -1,7 +1,40 @@
 import { Straight } from '~/entities/hands/Straight'
 import * as testData from '~/test/TestData'
 
-describe('Straight', () => {
+describe('Unit Test', () => {
+  test('isStraight() => true & isFlush() => false', () => {
+    const hand = new Straight(testData.HIGH_CARD)
+    const isStraight = jest
+      .spyOn<any, any>(hand, 'isStraight')
+      .mockReturnValue(true)
+    const isFlush = jest.spyOn<any, any>(hand, 'isFlush').mockReturnValue(false)
+    expect(hand.judge()).toBeTruthy()
+    expect(isStraight).toHaveBeenCalledTimes(1)
+    expect(isFlush).toHaveBeenCalledTimes(1)
+  })
+  test('isStraight() => false & isFlush() => false', () => {
+    const hand = new Straight(testData.HIGH_CARD)
+    const isStraight = jest
+      .spyOn<any, any>(hand, 'isStraight')
+      .mockReturnValue(false)
+    const isFlush = jest.spyOn<any, any>(hand, 'isFlush').mockReturnValue(false)
+    expect(hand.judge()).toBeFalsy()
+    expect(isStraight).toHaveBeenCalledTimes(1)
+    expect(isFlush).toHaveBeenCalledTimes(0)
+  })
+  test('isStraight() => true & isFlush() => true', () => {
+    const hand = new Straight(testData.HIGH_CARD)
+    const isStraight = jest
+      .spyOn<any, any>(hand, 'isStraight')
+      .mockReturnValue(true)
+    const isFlush = jest.spyOn<any, any>(hand, 'isFlush').mockReturnValue(true)
+    expect(hand.judge()).toBeFalsy()
+    expect(isStraight).toHaveBeenCalledTimes(1)
+    expect(isFlush).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('Check all test data', () => {
   test('high card', () => {
     const hand = new Straight(testData.HIGH_CARD)
     expect(hand.judge()).toBeFalsy()

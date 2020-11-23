@@ -1,7 +1,30 @@
 import { OnePair } from '~/entities/hands/OnePair'
 import * as testData from '~/test/TestData'
 
-describe('OnePair', () => {
+describe('Unit Test', () => {
+  test('pieceCount() => 3 & pairCount() => 1', () => {
+    const hand = new OnePair(testData.HIGH_CARD)
+    const pieceCount = jest
+      .spyOn<any, any>(hand, 'pieceCount')
+      .mockReturnValue(3)
+    const pairCount = jest.spyOn<any, any>(hand, 'pairCount').mockReturnValue(1)
+    expect(hand.judge()).toBeTruthy()
+    expect(pieceCount).toHaveBeenCalledTimes(1)
+    expect(pairCount).toHaveBeenCalledTimes(1)
+  })
+  test('pieceCount() => 5 & pairCount() => 0', () => {
+    const hand = new OnePair(testData.HIGH_CARD)
+    const pieceCount = jest
+      .spyOn<any, any>(hand, 'pieceCount')
+      .mockReturnValue(5)
+    const pairCount = jest.spyOn<any, any>(hand, 'pairCount').mockReturnValue(0)
+    expect(hand.judge()).toBeFalsy()
+    expect(pieceCount).toHaveBeenCalledTimes(1)
+    expect(pairCount).toHaveBeenCalledTimes(0)
+  })
+})
+
+describe('Check all test data', () => {
   test('high card', () => {
     const hand = new OnePair(testData.HIGH_CARD)
     expect(hand.judge()).toBeFalsy()
