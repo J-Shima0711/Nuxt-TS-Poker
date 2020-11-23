@@ -1,16 +1,49 @@
 <template>
   <div class="frame">
     <div class="board">
+      <div class="result">
+        <ResultArea v-show="gameBoard.status() === 'SHOW_RESULT'">
+          {{ cpuResult }}
+        </ResultArea>
+      </div>
       <hand-area
         :cards="cpuHand"
-        :owner="gameBoard.owner.cpu"
-        :game-status="gameBoard.status"
+        :visible="cpuCardVisible"
+        :selectable="false"
+        :selected-states="cpuCardSelectedStates"
+        @toggleSelect="toggleSelect"
       />
+      <div class="hand-name-area cpu-hand">
+        <hand-name
+          v-show="gameBoard.status() === 'SHOW_RESULT'"
+          :hand-level="handOfCPU.level"
+        >
+          {{ handOfCPU.label }}
+        </hand-name>
+      </div>
+      <BaseButton class="center-button" @click="centerButtonAction">
+        {{ centerButtonText }}
+      </BaseButton>
+      <div class="hand-name-area player-hand">
+        <hand-name
+          v-show="gameBoard.status() !== 'BEFORE_START'"
+          :hand-level="handOfPlayer.level"
+        >
+          {{ handOfPlayer.label }}
+        </hand-name>
+      </div>
       <hand-area
         :cards="playerHand"
-        :owner="gameBoard.owner.player"
-        :game-status="gameBoard.status"
+        :visible="playerCardVisible"
+        :selectable="true"
+        :selected-states="playerCardSelectedStates"
+        @toggleSelect="toggleSelect"
       />
+      <div class="result">
+        <ResultArea v-show="gameBoard.status() === 'SHOW_RESULT'">
+          {{ playerResult }}
+        </ResultArea>
+      </div>
     </div>
   </div>
 </template>
@@ -21,47 +54,143 @@ import HandArea from '~/components/molecules/HandArea.vue'
 import { Card } from '~/entities/CardIF'
 import { GameBoard } from '~/entities/GameBoard'
 import { Hand } from '~/entities/hands/Hand'
+import BaseButton from '~/components/atoms/BaseButton.vue'
+import HandName from '~/components/atoms/HandName.vue'
+import ResultArea from '~/components/atoms/ResultArea.vue'
+
+type textCenterButton = 'Game Start' | 'Ready ?' | 'Exchange' | 'Next Game'
+type textResult = 'WIN' | 'DRAW' | 'LOSE'
 
 export default Vue.extend({
   components: {
+    BaseButton,
     HandArea,
+    HandName,
+    ResultArea,
   },
   data() {
     return {
-      gameBoard: null as GameBoard | null,
-      cpuHand: null as Card[] | null,
-      playerHand: null as Card[] | null,
+      gameBoard: {} as GameBoard,
+      cpuHand: [] as Card[],
+      playerHand: [] as Card[],
+      cpuCardSelectedStates: [false, false, false, false, false] as const,
+      playerCardSelectedStates: [
+        false,
+        false,
+        false,
+        false,
+        false,
+      ] as boolean[],
     }
   },
   computed: {
-    handOfCPU(): Hand | null {
-      if (this.cpuHand != null && this.gameBoard != null) {
-        return this.gameBoard.makeHand(this.cpuHand)
-      }
-      return null
+    handOfCPU(): Hand {
+      return this.gameBoard.makeHand(this.cpuHand)
     },
-    handOfPlayer(): Hand | null {
-      if (this.playerHand != null && this.gameBoard != null) {
-        return this.gameBoard.makeHand(this.playerHand)
+    handOfPlayer(): Hand {
+      return this.gameBoard.makeHand(this.playerHand)
+    },
+    cpuCardVisible(): boolean {
+      return this.gameBoard.status() === 'SHOW_RESULT'
+    },
+    playerCardVisible(): boolean {
+      return this.gameBoard.status() !== 'BEFORE_START'
+    },
+    selectedCards(): Card[] {
+      return this.playerHand.reduce((acc, card, idx) => {
+        if (this.playerCardSelectedStates[idx]) {
+          acc.push(card)
+        }
+        return acc
+      }, [] as Card[])
+    },
+    centerButtonText(): textCenterButton {
+      switch (this.gameBoard.status()) {
+        case 'BEFORE_START':
+          return 'Game Start'
+        case 'EXCHANGE_TIME':
+          return this.selectedCards.length ? 'Exchange' : 'Ready ?'
+        default:
+          return 'Next Game'
       }
-      return null
+    },
+    isBothHighCard(): boolean {
+      return this.handOfCPU.level === 0 && this.handOfPlayer.level === 0
+    },
+    isDraw(): boolean {
+      if (!this.isBothHighCard) {
+        return this.handOfCPU.level === this.handOfPlayer.level
+      }
+      return (
+        this.isBothHighCard &&
+        this.handOfCPU.mostHighCard() === this.handOfPlayer.mostHighCard()
+      )
+    },
+    cpuResult(): textResult {
+      if (this.isDraw) return 'DRAW'
+      if (this.isBothHighCard) {
+        return this.handOfCPU.mostHighCard() > this.handOfPlayer.mostHighCard()
+          ? 'WIN'
+          : 'LOSE'
+      }
+      return this.handOfCPU.level > this.handOfPlayer.level ? 'WIN' : 'LOSE'
+    },
+    playerResult(): textResult {
+      if (this.isDraw) return 'DRAW'
+      if (this.isBothHighCard) {
+        return this.handOfCPU.mostHighCard() < this.handOfPlayer.mostHighCard()
+          ? 'WIN'
+          : 'LOSE'
+      }
+      return this.handOfCPU.level < this.handOfPlayer.level ? 'WIN' : 'LOSE'
     },
   },
   created() {
     this.initialize()
   },
-  mounted() {
-    // eslint-disable-next-line no-console
-    console.log(this.handOfCPU, this.handOfPlayer)
-  },
   methods: {
-    initialize() {
+    initialize(): void {
       this.gameBoard = new GameBoard()
-      console.log(this.gameBoard.status)
       this.cpuHand = this.gameBoard.dealCard(5)
       this.playerHand = this.gameBoard.dealCard(5)
-      this.gameBoard.progressGame()
-      console.log(this.gameBoard.status)
+    },
+    centerButtonAction(): void {
+      switch (this.gameBoard.status()) {
+        case 'BEFORE_START':
+          this.gameBoard.progressGame()
+          break
+        case 'EXCHANGE_TIME':
+          this.exchangeCard()
+          this.resetSelectedStates()
+          this.gameBoard.progressGame()
+          break
+        case 'SHOW_RESULT':
+          this.gameBoard.collectCard(this.cpuHand, this.playerHand)
+          this.initialize()
+          this.gameBoard.nextGame()
+      }
+    },
+    exchangeCard(): void {
+      if (!this.selectedCards.length) return
+      const selectedCards: Card[] = []
+      this.selectedCards.forEach((card) => {
+        const target = this.playerHand.indexOf(card)
+        if (target >= 0) {
+          selectedCards.push(...this.playerHand.splice(target, 1))
+        }
+      })
+      this.playerHand.push(...this.gameBoard.exchangeCard(selectedCards))
+    },
+    resetSelectedStates(): void {
+      this.playerCardSelectedStates = [false, false, false, false, false]
+    },
+    toggleSelect(idx: number): void {
+      if (this.gameBoard?.status() !== 'EXCHANGE_TIME') return
+      this.$set(
+        this.playerCardSelectedStates,
+        idx,
+        !this.playerCardSelectedStates[idx]
+      )
     },
   },
 })
@@ -82,5 +211,27 @@ export default Vue.extend({
   flex-direction: column;
   box-sizing: border-box;
   background-image: url('/images/board.jpg');
+}
+.hand-name-area {
+  height: 60px;
+}
+.cpu-hand {
+  display: flex;
+  flex-direction: row;
+}
+.player-hand {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.center-button {
+  text-align: center;
+  font-size: 28px;
+  font-style: italic;
+  color: #ffffff;
+  text-shadow: black;
+}
+.result {
+  height: 100px;
 }
 </style>

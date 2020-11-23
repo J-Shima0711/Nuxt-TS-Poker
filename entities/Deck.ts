@@ -35,7 +35,7 @@ export class Deck {
     this.shuffle()
   }
 
-  private shuffle(): void {
+  shuffle(): void {
     this._deck.sort(() => Math.random() - 0.5)
   }
 

@@ -93,6 +93,17 @@ describe('Hand', () => {
     ])
   })
 
+  test('mostHighCard', () => {
+    const hand = new MockHand([
+      { suit: 'S', label: 'A', rank: 14 },
+      { suit: 'D', label: 'K', rank: 13 },
+      { suit: 'S', label: 'Q', rank: 12 },
+      { suit: 'D', label: 'J', rank: 11 },
+      { suit: 'S', label: '10', rank: 10 },
+    ])
+    expect(hand.mostHighCard()).toBe(14)
+  })
+
   test('pieceCount', () => {
     const hand = new MockHand([
       { suit: 'S', label: 'A', rank: 14 },

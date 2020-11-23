@@ -2,25 +2,26 @@
   <div class="container">
     <div>
       <logo />
-      <h1 class="title">nuxt-ts</h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+      <h1 class="title">Poker</h1>
+      <h2 class="subtitle">by Nuxt JS & TypeScript</h2>
+      <!--      <div class="links">-->
+      <!--        <a-->
+      <!--          href="https://nuxtjs.org/"-->
+      <!--          target="_blank"-->
+      <!--          rel="noopener noreferrer"-->
+      <!--          class="button&#45;&#45;green"-->
+      <!--        >-->
+      <!--          Documentation-->
+      <!--        </a>-->
+      <!--        <a-->
+      <!--          href="https://github.com/nuxt/nuxt.js"-->
+      <!--          target="_blank"-->
+      <!--          rel="noopener noreferrer"-->
+      <!--          class="button&#45;&#45;grey"-->
+      <!--        >-->
+      <!--          GitHub-->
+      <!--        </a>-->
+      <!--      </div>-->
     </div>
   </div>
 </template>
@@ -33,19 +34,17 @@ export default Vue.extend({
   components: {
     Logo,
   },
-  data() {
-    return {
-      text: '' as string,
-    }
-  },
-  created() {
-    this.text = 'a'
+  mounted() {
+    setTimeout(() => {
+      this.$router.push('./PokerGame')
+    }, 2500)
   },
 })
 </script>
 
 <style>
 .container {
+  animation: 2s appear;
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
@@ -74,5 +73,11 @@ export default Vue.extend({
 
 .links {
   padding-top: 15px;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
 }
 </style>

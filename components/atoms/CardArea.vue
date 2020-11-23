@@ -1,15 +1,12 @@
 <template>
-  <div class="card-area" :class="{ selected }" @click="toggleSelect">
-    <img class="card-img" :src="cardImage" alt="カード" />
+  <div class="card-area" :class="{ selected }">
+    <img class="card-img" :src="cardImage" alt="カード" @click="onClick" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue, { PropOptions } from 'vue'
-// import { ThisTypedComponentOptionsWithRecordProps } from 'vue/types/options'
 import { Card } from '~/entities/CardIF'
-import { GameStatus, Owner } from '~/entities/GameBoard'
-// import { UserTypes } form '@/types/user'
 
 export default Vue.extend({
   props: {
@@ -17,21 +14,18 @@ export default Vue.extend({
       type: Object,
       required: true,
     } as PropOptions<Card>,
-    owner: {
-      type: String,
+    visible: {
+      type: Boolean,
       required: true,
-    } as PropOptions<Owner>,
-    gameStatus: {
-      type: String,
+    },
+    selectable: {
+      type: Boolean,
       required: true,
-    } as PropOptions<GameStatus>,
-  },
-  data() {
-    return {
-      visible: false,
-      selected: false,
-      selectable: false,
-    }
+    },
+    selected: {
+      type: Boolean,
+      required: true,
+    },
   },
   computed: {
     cardImage(): string {
@@ -40,23 +34,11 @@ export default Vue.extend({
         : '/images/back.png'
     },
   },
-  created() {
-    // initialize
-    if (this.owner === 'PLAYER') {
-      this.visible = true
-      this.selectable = true
-    }
-  },
   methods: {
-    toggleSelect(): void {
-      if (!this.selectable || this.gameStatus !== 'EXCHANGE_TIME') return
-      this.selected = !this.selected
-    },
-    showCard(): void {
-      this.visible = true
-    },
-    hideCard(): void {
-      this.visible = false
+    onClick(): void {
+      if (this.selectable) {
+        this.$emit('click')
+      }
     },
   },
 })
