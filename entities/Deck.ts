@@ -32,10 +32,19 @@ export class Deck {
     if (includesJoker) {
       this._deck.push({ isWildCard: true, label: 'JO' })
     }
+    this.shuffle()
+  }
+
+  private shuffle(): void {
     this._deck.sort(() => Math.random() - 0.5)
   }
 
   deal(num: number): Card[] {
     return this._deck.splice(0, num) as Card[]
+  }
+
+  recovery(cards: Card[]): void {
+    this._deck.push(...cards)
+    this.shuffle()
   }
 }

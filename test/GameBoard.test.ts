@@ -12,38 +12,40 @@ import { StraightFlush } from '~/entities/hands/StraightFlush'
 import { RoyalFlush } from '~/entities/hands/RoyalFlush'
 
 describe('makeHand', () => {
+  const gameBoard = new GameBoard()
+
   test('high card', () => {
-    expect(GameBoard.makeHand(testData.HIGH_CARD)).toBeInstanceOf(HighCard)
+    expect(gameBoard.makeHand(testData.HIGH_CARD)).toBeInstanceOf(HighCard)
   })
   test('one pair', () => {
-    expect(GameBoard.makeHand(testData.ONE_PAIR)).toBeInstanceOf(OnePair)
+    expect(gameBoard.makeHand(testData.ONE_PAIR)).toBeInstanceOf(OnePair)
   })
   test('two pair', () => {
-    expect(GameBoard.makeHand(testData.TWO_PAIR)).toBeInstanceOf(TwoPair)
+    expect(gameBoard.makeHand(testData.TWO_PAIR)).toBeInstanceOf(TwoPair)
   })
   test('three of a kind', () => {
-    expect(GameBoard.makeHand(testData.THREE_OF_A_KIND)).toBeInstanceOf(
+    expect(gameBoard.makeHand(testData.THREE_OF_A_KIND)).toBeInstanceOf(
       ThreeOfAKind
     )
   })
   test('straight', () => {
-    expect(GameBoard.makeHand(testData.STRAIGHT)).toBeInstanceOf(Straight)
+    expect(gameBoard.makeHand(testData.STRAIGHT)).toBeInstanceOf(Straight)
   })
   test('flush', () => {
-    expect(GameBoard.makeHand(testData.FLUSH)).toBeInstanceOf(Flush)
+    expect(gameBoard.makeHand(testData.FLUSH)).toBeInstanceOf(Flush)
   })
   test('full house', () => {
-    expect(GameBoard.makeHand(testData.FULL_HOUSE)).toBeInstanceOf(FullHouse)
+    expect(gameBoard.makeHand(testData.FULL_HOUSE)).toBeInstanceOf(FullHouse)
   })
   test('quads', () => {
-    expect(GameBoard.makeHand(testData.QUADS)).toBeInstanceOf(Quads)
+    expect(gameBoard.makeHand(testData.QUADS)).toBeInstanceOf(Quads)
   })
   test('straight flush', () => {
-    expect(GameBoard.makeHand(testData.STRAIGHT_FLUSH)).toBeInstanceOf(
+    expect(gameBoard.makeHand(testData.STRAIGHT_FLUSH)).toBeInstanceOf(
       StraightFlush
     )
   })
   test('royal flush', () => {
-    expect(GameBoard.makeHand(testData.ROYAL_FLUSH)).toBeInstanceOf(RoyalFlush)
+    expect(gameBoard.makeHand(testData.ROYAL_FLUSH)).toBeInstanceOf(RoyalFlush)
   })
 })
