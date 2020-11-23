@@ -1,7 +1,66 @@
 import { StraightFlush } from '~/entities/hands/StraightFlush'
 import * as testData from '~/test/TestData'
 
-describe('StraightFlush', () => {
+describe('Unit Test', () => {
+  test('isStraight() => true & isFlush() => true & excludedDuplicatesRank[0] = 9', () => {
+    const hand = new StraightFlush([])
+    const isStraight = jest
+      .spyOn<any, any>(hand, 'isStraight')
+      .mockReturnValue(true)
+    const isFlush = jest.spyOn<any, any>(hand, 'isFlush').mockReturnValue(true)
+    const excludedDuplicatesRank = jest
+      .spyOn<any, any>(hand, 'excludedDuplicatesRank')
+      .mockReturnValue([9])
+    expect(hand.judge()).toBeTruthy()
+    expect(isStraight).toHaveBeenCalledTimes(1)
+    expect(isFlush).toHaveBeenCalledTimes(1)
+    expect(excludedDuplicatesRank).toHaveBeenCalledTimes(1)
+  })
+  test('isStraight() => false & isFlush() => true & excludedDuplicatesRank[0] = 9', () => {
+    const hand = new StraightFlush([])
+    const isStraight = jest
+      .spyOn<any, any>(hand, 'isStraight')
+      .mockReturnValue(false)
+    const isFlush = jest.spyOn<any, any>(hand, 'isFlush').mockReturnValue(true)
+    const excludedDuplicatesRank = jest
+      .spyOn<any, any>(hand, 'excludedDuplicatesRank')
+      .mockReturnValue([9])
+    expect(hand.judge()).toBeFalsy()
+    expect(isStraight).toHaveBeenCalledTimes(1)
+    expect(isFlush).toHaveBeenCalledTimes(0)
+    expect(excludedDuplicatesRank).toHaveBeenCalledTimes(0)
+  })
+  test('isStraight() => true & isFlush() => false & excludedDuplicatesRank[0] = 9', () => {
+    const hand = new StraightFlush([])
+    const isStraight = jest
+      .spyOn<any, any>(hand, 'isStraight')
+      .mockReturnValue(true)
+    const isFlush = jest.spyOn<any, any>(hand, 'isFlush').mockReturnValue(false)
+    const excludedDuplicatesRank = jest
+      .spyOn<any, any>(hand, 'excludedDuplicatesRank')
+      .mockReturnValue([9])
+    expect(hand.judge()).toBeFalsy()
+    expect(isStraight).toHaveBeenCalledTimes(1)
+    expect(isFlush).toHaveBeenCalledTimes(1)
+    expect(excludedDuplicatesRank).toHaveBeenCalledTimes(0)
+  })
+  test('isStraight() => true & isFlush() => true & excludedDuplicatesRank[0] = 10', () => {
+    const hand = new StraightFlush([])
+    const isStraight = jest
+      .spyOn<any, any>(hand, 'isStraight')
+      .mockReturnValue(true)
+    const isFlush = jest.spyOn<any, any>(hand, 'isFlush').mockReturnValue(true)
+    const excludedDuplicatesRank = jest
+      .spyOn<any, any>(hand, 'excludedDuplicatesRank')
+      .mockReturnValue([10])
+    expect(hand.judge()).toBeFalsy()
+    expect(isStraight).toHaveBeenCalledTimes(1)
+    expect(isFlush).toHaveBeenCalledTimes(1)
+    expect(excludedDuplicatesRank).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('Check all test data', () => {
   test('high card', () => {
     const hand = new StraightFlush(testData.HIGH_CARD)
     expect(hand.judge()).toBeFalsy()

@@ -1,7 +1,23 @@
 import { TwoPair } from '~/entities/hands/TwoPair'
 import * as testData from '~/test/TestData'
+import any = jasmine.any
 
-describe('TwoPair', () => {
+describe('Unit Test', () => {
+  test('pairCount() => 2', () => {
+    const hand = new TwoPair([])
+    const pairCount = jest.spyOn<any, any>(hand, 'pairCount').mockReturnValue(2)
+    expect(hand.judge()).toBeTruthy()
+    expect(pairCount).toHaveBeenCalledTimes(1)
+  })
+  test('pairCount() => 1', () => {
+    const hand = new TwoPair([])
+    const pairCount = jest.spyOn<any, any>(hand, 'pairCount').mockReturnValue(1)
+    expect(hand.judge()).toBeFalsy()
+    expect(pairCount).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('Check all test data', () => {
   test('high card', () => {
     const hand = new TwoPair(testData.HIGH_CARD)
     expect(hand.judge()).toBeFalsy()
