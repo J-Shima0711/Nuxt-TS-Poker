@@ -10,6 +10,7 @@ import { FullHouse } from '~/entities/hands/FullHouse'
 import { Quads } from '~/entities/hands/Quads'
 import { StraightFlush } from '~/entities/hands/StraightFlush'
 import { RoyalFlush } from '~/entities/hands/RoyalFlush'
+import { Deck } from '~/entities/Deck'
 
 const hands = [
   OnePair,
@@ -23,8 +24,23 @@ const hands = [
   RoyalFlush,
 ]
 
+export type GameStatus = 'BEFORE_START' | 'EXCHANGE_TIME' | 'SHOW_RESULT'
+export type Owner = 'CPU' | 'PLAYER'
+
 export class GameBoard {
-  static makeHand(cards: Card[]): Hand {
+  public status: GameStatus
+  public readonly owner: { [key: string]: Owner } = {
+    cpu: 'CPU',
+    player: 'PLAYER',
+  } as const
+
+  private deck: Deck
+  constructor() {
+    this.status = 'BEFORE_START'
+    this.deck = new Deck(false)
+  }
+
+  makeHand(cards: Card[]): Hand {
     return hands.reduce((acc, Hand) => {
       const hand = new Hand(cards)
       if (hand.judge() && hand.isHigher(acc)) {
@@ -32,5 +48,27 @@ export class GameBoard {
       }
       return acc
     }, new HighCard(cards))
+  }
+
+  progressGame(): void {
+    this.status =
+      this.status === 'BEFORE_START'
+        ? 'EXCHANGE_TIME'
+        : this.status === 'EXCHANGE_TIME'
+        ? 'SHOW_RESULT'
+        : 'BEFORE_START'
+  }
+
+  dealCard(num: number): Card[] {
+    return this.deck.deal(num)
+  }
+
+  exchangeCard(cards: Card[]): Card[] {
+    this.deck.recovery(cards)
+    return this.deck.deal(cards.length)
+  }
+
+  collectCard(cards: Card[]): void {
+    this.deck.recovery(cards)
   }
 }
