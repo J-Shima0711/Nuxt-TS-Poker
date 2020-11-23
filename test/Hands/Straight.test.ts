@@ -3,7 +3,7 @@ import * as testData from '~/test/TestData'
 
 describe('Unit Test', () => {
   test('isStraight() => true & isFlush() => false', () => {
-    const hand = new Straight(testData.HIGH_CARD)
+    const hand = new Straight([])
     const isStraight = jest
       .spyOn<any, any>(hand, 'isStraight')
       .mockReturnValue(true)
@@ -13,7 +13,7 @@ describe('Unit Test', () => {
     expect(isFlush).toHaveBeenCalledTimes(1)
   })
   test('isStraight() => false & isFlush() => false', () => {
-    const hand = new Straight(testData.HIGH_CARD)
+    const hand = new Straight([])
     const isStraight = jest
       .spyOn<any, any>(hand, 'isStraight')
       .mockReturnValue(false)
@@ -23,7 +23,7 @@ describe('Unit Test', () => {
     expect(isFlush).toHaveBeenCalledTimes(0)
   })
   test('isStraight() => true & isFlush() => true', () => {
-    const hand = new Straight(testData.HIGH_CARD)
+    const hand = new Straight([])
     const isStraight = jest
       .spyOn<any, any>(hand, 'isStraight')
       .mockReturnValue(true)

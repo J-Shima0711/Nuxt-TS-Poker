@@ -3,7 +3,7 @@ import * as testData from '~/test/TestData'
 
 describe('Unit Test', () => {
   test('exists an object with a count of 4 in aggregationOfRank()', () => {
-    const hand = new Quads(testData.HIGH_CARD)
+    const hand = new Quads([])
     const aggregationOfRank = jest
       .spyOn<any, any>(hand, 'aggregationOfRank')
       .mockReturnValue([{ rank: 14, count: 4 }])
@@ -11,7 +11,7 @@ describe('Unit Test', () => {
     expect(aggregationOfRank).toHaveBeenCalledTimes(1)
   })
   test('does not exists an object with a count of 4 in aggregationOfRank()', () => {
-    const hand = new Quads(testData.HIGH_CARD)
+    const hand = new Quads([])
     const aggregationOfRank = jest
       .spyOn<any, any>(hand, 'aggregationOfRank')
       .mockReturnValue([{ rank: 14, count: 3 }])

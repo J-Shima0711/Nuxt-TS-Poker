@@ -3,7 +3,7 @@ import * as testData from '~/test/TestData'
 
 describe('Unit Test', () => {
   test('hasThreeOfAKind() => true & pairCount() => 1', () => {
-    const hand = new FullHouse(testData.HIGH_CARD)
+    const hand = new FullHouse([])
     const hasThreeOfAKind = jest
       .spyOn<any, any>(hand, 'hasThreeOfAKind')
       .mockReturnValue(true)
@@ -13,7 +13,7 @@ describe('Unit Test', () => {
     expect(pairCount).toHaveBeenCalledTimes(1)
   })
   test('hasThreeOfAKind() => false & pairCount() => 1', () => {
-    const hand = new FullHouse(testData.HIGH_CARD)
+    const hand = new FullHouse([])
     const hasThreeOfAKind = jest
       .spyOn<any, any>(hand, 'hasThreeOfAKind')
       .mockReturnValue(false)
@@ -23,7 +23,7 @@ describe('Unit Test', () => {
     expect(pairCount).toHaveBeenCalledTimes(0)
   })
   test('hasThreeOfAKind() => true & pairCount() => 0', () => {
-    const hand = new FullHouse(testData.HIGH_CARD)
+    const hand = new FullHouse([])
     const hasThreeOfAKind = jest
       .spyOn<any, any>(hand, 'hasThreeOfAKind')
       .mockReturnValue(true)

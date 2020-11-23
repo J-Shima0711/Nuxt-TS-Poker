@@ -3,7 +3,7 @@ import * as testData from '~/test/TestData'
 
 describe('Unit Test', () => {
   test('isStraight() => true & isFlush() => true & excludedDuplicatesRank[0] = 9', () => {
-    const hand = new StraightFlush(testData.HIGH_CARD)
+    const hand = new StraightFlush([])
     const isStraight = jest
       .spyOn<any, any>(hand, 'isStraight')
       .mockReturnValue(true)
@@ -17,7 +17,7 @@ describe('Unit Test', () => {
     expect(excludedDuplicatesRank).toHaveBeenCalledTimes(1)
   })
   test('isStraight() => false & isFlush() => true & excludedDuplicatesRank[0] = 9', () => {
-    const hand = new StraightFlush(testData.HIGH_CARD)
+    const hand = new StraightFlush([])
     const isStraight = jest
       .spyOn<any, any>(hand, 'isStraight')
       .mockReturnValue(false)
@@ -31,7 +31,7 @@ describe('Unit Test', () => {
     expect(excludedDuplicatesRank).toHaveBeenCalledTimes(0)
   })
   test('isStraight() => true & isFlush() => false & excludedDuplicatesRank[0] = 9', () => {
-    const hand = new StraightFlush(testData.HIGH_CARD)
+    const hand = new StraightFlush([])
     const isStraight = jest
       .spyOn<any, any>(hand, 'isStraight')
       .mockReturnValue(true)
@@ -45,7 +45,7 @@ describe('Unit Test', () => {
     expect(excludedDuplicatesRank).toHaveBeenCalledTimes(0)
   })
   test('isStraight() => true & isFlush() => true & excludedDuplicatesRank[0] = 10', () => {
-    const hand = new StraightFlush(testData.HIGH_CARD)
+    const hand = new StraightFlush([])
     const isStraight = jest
       .spyOn<any, any>(hand, 'isStraight')
       .mockReturnValue(true)

@@ -3,7 +3,7 @@ import * as testData from '~/test/TestData'
 
 describe('Unit Test', () => {
   test('pieceCount() => 3 & pairCount() => 1', () => {
-    const hand = new OnePair(testData.HIGH_CARD)
+    const hand = new OnePair([])
     const pieceCount = jest
       .spyOn<any, any>(hand, 'pieceCount')
       .mockReturnValue(3)
@@ -13,7 +13,7 @@ describe('Unit Test', () => {
     expect(pairCount).toHaveBeenCalledTimes(1)
   })
   test('pieceCount() => 5 & pairCount() => 0', () => {
-    const hand = new OnePair(testData.HIGH_CARD)
+    const hand = new OnePair([])
     const pieceCount = jest
       .spyOn<any, any>(hand, 'pieceCount')
       .mockReturnValue(5)
