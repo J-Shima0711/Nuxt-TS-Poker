@@ -24,5 +24,12 @@ export default Vue.extend({
   height: 60px;
   display: flex;
   align-items: center;
+  animation: 0.2s appear;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
 }
 </style>

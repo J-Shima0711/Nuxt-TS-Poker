@@ -3,7 +3,8 @@
     <div>
       <logo />
       <h1 class="title">Poker</h1>
-      <h2 class="subtitle">by Nuxt JS & TypeScript</h2>
+      <h2 class="subtitle">made with Nuxt JS & TypeScript</h2>
+      <p>Programmed by J.Shima</p>
       <!--      <div class="links">-->
       <!--        <a-->
       <!--          href="https://nuxtjs.org/"-->

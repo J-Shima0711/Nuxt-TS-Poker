@@ -1,6 +1,12 @@
 <template>
   <div class="card-area" :class="{ selected }">
-    <img class="card-img" :src="cardImage" alt="カード" @click="onClick" />
+    <img
+      class="card-img"
+      :class="{ selectable }"
+      :src="cardImage"
+      alt="カード"
+      @click="onClick"
+    />
   </div>
 </template>
 
@@ -46,14 +52,29 @@ export default Vue.extend({
 
 <style>
 .card-area {
-  display: inline-block;
-  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 140px;
 }
 .card-img {
   width: 80px;
   height: 120px;
+  transition: all 0.2s ease 0s;
+  animation: 0.2s appear;
+}
+img.selectable:hover {
+  cursor: pointer;
+  width: 84px;
+  height: 124px;
 }
 .selected {
   background-color: lightgreen;
+}
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
 }
 </style>

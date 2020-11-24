@@ -27,11 +27,13 @@ const hands = [
 
 export class GameBoard {
   private manager: GameManager
+  renderKey: number
 
   private deck: Deck
   constructor() {
     this.manager = new GameManager()
     this.deck = new Deck(false)
+    this.renderKey = Math.random()
   }
 
   makeHand(cards: Card[]): Hand {

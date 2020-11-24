@@ -46,3 +46,11 @@ export default Vue.extend({
   },
 })
 </script>
+
+<style>
+.hand-area {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+</style>

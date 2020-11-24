@@ -1,6 +1,6 @@
 <template>
   <div class="frame">
-    <div class="board">
+    <div :key="gameBoard.renderKey" class="board">
       <div class="result">
         <ResultArea v-show="gameBoard.status() === 'SHOW_RESULT'">
           {{ cpuResult }}
@@ -15,18 +15,20 @@
       />
       <div class="hand-name-area cpu-hand">
         <hand-name
-          v-show="gameBoard.status() === 'SHOW_RESULT'"
+          v-if="gameBoard.status() === 'SHOW_RESULT'"
           :hand-level="handOfCPU.level"
         >
           {{ handOfCPU.label }}
         </hand-name>
       </div>
-      <BaseButton class="center-button" @click="centerButtonAction">
-        {{ centerButtonText }}
-      </BaseButton>
+      <div class="center-btn-area">
+        <BaseButton class="center-button" @click="centerButtonAction">
+          {{ centerButtonText }}
+        </BaseButton>
+      </div>
       <div class="hand-name-area player-hand">
         <hand-name
-          v-show="gameBoard.status() !== 'BEFORE_START'"
+          v-if="gameBoard.status() !== 'BEFORE_START'"
           :hand-level="handOfPlayer.level"
         >
           {{ handOfPlayer.label }}
@@ -35,7 +37,7 @@
       <hand-area
         :cards="playerHand"
         :visible="playerCardVisible"
-        :selectable="true"
+        :selectable="gameBoard.status() === 'EXCHANGE_TIME'"
         :selected-states="playerCardSelectedStates"
         @toggleSelect="toggleSelect"
       />
@@ -223,13 +225,17 @@ export default Vue.extend({
   display: flex;
   flex-direction: row-reverse;
 }
-
+.center-btn-area {
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
 .center-button {
   text-align: center;
   font-size: 28px;
   font-style: italic;
   color: #ffffff;
-  text-shadow: black;
+  margin: auto;
 }
 .result {
   height: 100px;
