@@ -22,6 +22,7 @@ export default Vue.extend({
   transition: all 0.2s ease 0s;
 }
 a.base-button:hover {
+  text-shadow: 2px 2px 3px #000000;
   opacity: 1;
   font-size: 30px;
 }

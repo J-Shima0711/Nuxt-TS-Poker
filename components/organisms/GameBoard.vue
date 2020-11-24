@@ -2,9 +2,10 @@
   <div class="frame">
     <div :key="gameBoard.renderKey" class="board">
       <div class="result">
-        <ResultArea v-show="gameBoard.status() === 'SHOW_RESULT'">
-          {{ cpuResult }}
-        </ResultArea>
+        <ResultArea
+          v-if="gameBoard.status() === 'SHOW_RESULT'"
+          :result="cpuResult"
+        ></ResultArea>
       </div>
       <hand-area
         :cards="cpuHand"
@@ -42,9 +43,10 @@
         @toggleSelect="toggleSelect"
       />
       <div class="result">
-        <ResultArea v-show="gameBoard.status() === 'SHOW_RESULT'">
-          {{ playerResult }}
-        </ResultArea>
+        <ResultArea
+          v-if="gameBoard.status() === 'SHOW_RESULT'"
+          :result="playerResult"
+        ></ResultArea>
       </div>
     </div>
   </div>
@@ -59,6 +61,7 @@ import { Hand } from '~/entities/hands/Hand'
 import BaseButton from '~/components/atoms/BaseButton.vue'
 import HandName from '~/components/atoms/HandName.vue'
 import ResultArea from '~/components/atoms/ResultArea.vue'
+import { ResultBox } from '~/entities/Result'
 
 type textCenterButton = 'Game Start' | 'Ready ?' | 'Exchange' | 'Next Game'
 type textResult = 'WIN' | 'DRAW' | 'LOSE'
@@ -83,6 +86,8 @@ export default Vue.extend({
         false,
         false,
       ] as boolean[],
+      cpuResult: {},
+      playerResult: {},
     }
   },
   computed: {
@@ -116,36 +121,6 @@ export default Vue.extend({
           return 'Next Game'
       }
     },
-    isBothHighCard(): boolean {
-      return this.handOfCPU.level === 0 && this.handOfPlayer.level === 0
-    },
-    isDraw(): boolean {
-      if (!this.isBothHighCard) {
-        return this.handOfCPU.level === this.handOfPlayer.level
-      }
-      return (
-        this.isBothHighCard &&
-        this.handOfCPU.mostHighCard() === this.handOfPlayer.mostHighCard()
-      )
-    },
-    cpuResult(): textResult {
-      if (this.isDraw) return 'DRAW'
-      if (this.isBothHighCard) {
-        return this.handOfCPU.mostHighCard() > this.handOfPlayer.mostHighCard()
-          ? 'WIN'
-          : 'LOSE'
-      }
-      return this.handOfCPU.level > this.handOfPlayer.level ? 'WIN' : 'LOSE'
-    },
-    playerResult(): textResult {
-      if (this.isDraw) return 'DRAW'
-      if (this.isBothHighCard) {
-        return this.handOfCPU.mostHighCard() < this.handOfPlayer.mostHighCard()
-          ? 'WIN'
-          : 'LOSE'
-      }
-      return this.handOfCPU.level < this.handOfPlayer.level ? 'WIN' : 'LOSE'
-    },
   },
   created() {
     this.initialize()
@@ -164,6 +139,14 @@ export default Vue.extend({
         case 'EXCHANGE_TIME':
           this.exchangeCard()
           this.resetSelectedStates()
+          this.cpuResult = this.gameBoard.getResult(
+            this.handOfCPU,
+            this.handOfPlayer
+          )
+          this.playerResult = this.gameBoard.getResult(
+            this.handOfPlayer,
+            this.handOfCPU
+          )
           this.gameBoard.progressGame()
           break
         case 'SHOW_RESULT':
@@ -208,7 +191,7 @@ export default Vue.extend({
 .board {
   width: 520px;
   padding: 5px;
-  border: 5px solid black;
+  border: 5px solid rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;

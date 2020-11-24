@@ -12,6 +12,7 @@ import { StraightFlush } from '~/entities/hands/StraightFlush'
 import { RoyalFlush } from '~/entities/hands/RoyalFlush'
 import { Deck } from '~/entities/Deck'
 import { GameManager, GameStatus } from '~/entities/GameStatus'
+import { Result } from '~/entities/Result'
 
 const hands = [
   OnePair,
@@ -70,5 +71,9 @@ export class GameBoard {
 
   status(): GameStatus {
     return this.manager.status
+  }
+
+  getResult(judgementTarget: Hand, comparisonTarget: Hand) {
+    return new Result(judgementTarget, comparisonTarget).getResult()
   }
 }
