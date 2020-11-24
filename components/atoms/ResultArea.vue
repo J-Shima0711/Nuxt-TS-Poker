@@ -26,7 +26,7 @@ export default Vue.extend({
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: 0.2s appear;
+  animation: 0.3s appear;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

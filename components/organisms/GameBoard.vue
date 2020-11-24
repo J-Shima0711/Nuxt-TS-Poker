@@ -47,6 +47,13 @@
         @toggleSelect="toggleSelect"
       />
       <div class="result">
+        <base-button
+          v-if="gameBoard.status() === 'EXCHANGE_TIME'"
+          class="sort-button"
+          @click="sortHand"
+        >
+          Sort
+        </base-button>
         <ResultArea
           v-if="gameBoard.status() === 'SHOW_RESULT'"
           :result="playerResult"
@@ -180,6 +187,10 @@ export default Vue.extend({
         !this.playerCardSelectedStates[idx]
       )
     },
+    sortHand(): void {
+      this.resetSelectedStates()
+      this.playerHand = this.gameBoard.sortHand(this.playerHand)
+    },
   },
 })
 </script>
@@ -222,7 +233,6 @@ export default Vue.extend({
   align-items: center;
 }
 .center-button {
-  text-align: center;
   font-size: 28px;
   font-style: italic;
   color: #ffffff;
@@ -230,5 +240,14 @@ export default Vue.extend({
 }
 .result {
   height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sort-button {
+  text-align: center;
+  font-size: 28px;
+  color: #ffffff;
+  margin: auto;
 }
 </style>

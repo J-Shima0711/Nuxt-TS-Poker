@@ -2,7 +2,7 @@
   <div class="hand-area">
     <card-area
       v-for="(card, idx) in cards"
-      :key="card.suit + card.label"
+      :key="card.suit + card.label + visible"
       :card="card"
       :visible="visible"
       :selectable="selectable"

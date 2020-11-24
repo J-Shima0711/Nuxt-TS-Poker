@@ -61,13 +61,13 @@ export default Vue.extend({
 .card-img {
   width: 80px;
   height: 120px;
-  transition: all 0.2s ease 0s;
-  animation: 0.2s appear;
+  transition: all 0.1s ease 0s;
+  animation: 0.3s appear;
 }
 img.selectable:hover {
   cursor: pointer;
-  width: 84px;
-  height: 124px;
+  width: 88px;
+  height: 128px;
 }
 .selected {
   background-color: rgba(144, 238, 144, 0.5);

@@ -34,7 +34,7 @@ export default Vue.extend({
   height: 60px;
   display: flex;
   align-items: center;
-  animation: 0.2s appear;
+  animation: 0.3s appear;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

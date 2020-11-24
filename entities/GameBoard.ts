@@ -76,4 +76,12 @@ export class GameBoard {
   getResult(judgementTarget: Hand, comparisonTarget: Hand) {
     return new Result(judgementTarget, comparisonTarget).getResult()
   }
+
+  sortHand(cards: Card[]): Card[] {
+    return cards.sort((a, b) => {
+      if (a.rank < b.rank) return -1
+      if (a.rank > b.rank) return 1
+      return 0
+    })
+  }
 }

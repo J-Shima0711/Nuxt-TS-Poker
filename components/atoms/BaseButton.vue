@@ -19,7 +19,7 @@ export default Vue.extend({
   font-family: 'Abril Fatface', cursive;
   cursor: pointer;
   opacity: 0.6;
-  transition: all 0.2s ease 0s;
+  transition: all 0.1s ease 0s;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
