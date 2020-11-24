@@ -70,7 +70,7 @@ img.selectable:hover {
   height: 124px;
 }
 .selected {
-  background-color: lightgreen;
+  background-color: rgba(144, 238, 144, 0.5);
 }
 @keyframes appear {
   0% {

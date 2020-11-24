@@ -28,9 +28,9 @@ const hands = [
 
 export class GameBoard {
   private manager: GameManager
+  private deck: Deck
   renderKey: number
 
-  private deck: Deck
   constructor() {
     this.manager = new GameManager()
     this.deck = new Deck(false)

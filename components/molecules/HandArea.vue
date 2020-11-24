@@ -52,5 +52,6 @@ export default Vue.extend({
   display: flex;
   justify-content: space-around;
   align-items: center;
+  padding: 5px 0;
 }
 </style>

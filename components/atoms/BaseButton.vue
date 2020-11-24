@@ -18,8 +18,12 @@ export default Vue.extend({
 .base-button {
   font-family: 'Abril Fatface', cursive;
   cursor: pointer;
-  opacity: 0.8;
+  opacity: 0.6;
   transition: all 0.2s ease 0s;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 a.base-button:hover {
   text-shadow: 2px 2px 3px #000000;

@@ -23,7 +23,11 @@
         </hand-name>
       </div>
       <div class="center-btn-area">
-        <BaseButton class="center-button" @click="centerButtonAction">
+        <BaseButton
+          :key="centerButtonText"
+          class="center-button"
+          @click="centerButtonAction"
+        >
           {{ centerButtonText }}
         </BaseButton>
       </div>
@@ -61,7 +65,6 @@ import { Hand } from '~/entities/hands/Hand'
 import BaseButton from '~/components/atoms/BaseButton.vue'
 import HandName from '~/components/atoms/HandName.vue'
 import ResultArea from '~/components/atoms/ResultArea.vue'
-import { ResultBox } from '~/entities/Result'
 
 type textCenterButton = 'Game Start' | 'Ready ?' | 'Exchange' | 'Next Game'
 type textResult = 'WIN' | 'DRAW' | 'LOSE'
@@ -150,7 +153,7 @@ export default Vue.extend({
           this.gameBoard.progressGame()
           break
         case 'SHOW_RESULT':
-          this.gameBoard.collectCard(this.cpuHand, this.playerHand)
+          // this.gameBoard.collectCard(this.cpuHand, this.playerHand)
           this.initialize()
           this.gameBoard.nextGame()
       }
@@ -183,19 +186,24 @@ export default Vue.extend({
 
 <style>
 .frame {
-  background-image: url('/images/wood.jpg');
+  background-image: url('/images/wood.png');
   width: 560px;
   padding: 20px;
   box-sizing: border-box;
+  border: 5px outset rgba(100, 100, 100, 0.5);
+  border-top: 0;
+  border-left: 0;
+  border-radius: 15px;
+  background-color: #6b3b00;
 }
 .board {
   width: 520px;
   padding: 5px;
-  border: 5px solid rgba(0, 0, 0, 0.5);
+  border: 5px inset rgba(100, 100, 100, 0.7);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  background-image: url('/images/board.jpg');
+  background-image: url('/images/board2.png');
 }
 .hand-name-area {
   height: 60px;

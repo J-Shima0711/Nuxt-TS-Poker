@@ -1,5 +1,5 @@
 <template>
-  <div class="hand-name"><slot></slot></div>
+  <div class="hand-name" :class="gradeOfHand"><slot></slot></div>
 </template>
 
 <script lang="ts">
@@ -10,6 +10,15 @@ export default Vue.extend({
     handLevel: {
       type: Number,
       required: true,
+    },
+  },
+  computed: {
+    gradeOfHand() {
+      return {
+        low: this.handLevel < 3,
+        middle: this.handLevel >= 3 && this.handLevel < 6,
+        high: this.handLevel >= 6,
+      }
     },
   },
 })
@@ -26,6 +35,22 @@ export default Vue.extend({
   display: flex;
   align-items: center;
   animation: 0.2s appear;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.low {
+  color: #66ff66;
+}
+
+.middle {
+  color: #ffcc33;
+}
+
+.high {
+  color: #ffff33;
 }
 
 @keyframes appear {

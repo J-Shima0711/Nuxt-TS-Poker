@@ -27,19 +27,27 @@ export default Vue.extend({
   justify-content: center;
   align-items: center;
   animation: 0.2s appear;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
-.win:before {
+
+.win:before,
+.lose:before,
+.draw:before {
   font-size: 62px;
+}
+
+.win:before {
   content: 'WIN';
   color: #f9cd0b;
 }
 .lose:before {
-  font-size: 62px;
   content: 'LOSE';
   color: #33ffff;
 }
 .draw:before {
-  font-size: 62px;
   content: 'DRAW';
   color: #00ff99;
 }
