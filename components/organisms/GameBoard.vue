@@ -206,13 +206,15 @@ export default Vue.extend({
   border-left: 0;
   border-radius: 15px;
   background-color: #6b3b00;
+  box-shadow: 10px 10px 15px rgba(255, 255, 150, 0.3);
 }
 .board {
   width: 520px;
   padding: 5px;
-  border: 5px inset rgba(100, 100, 100, 0.7);
+  border: 5px inset rgba(115, 66, 41, 0.7);
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   box-sizing: border-box;
   background-image: url('/images/board2.png');
 }
@@ -249,5 +251,53 @@ export default Vue.extend({
   font-size: 28px;
   color: #ffffff;
   margin: auto;
+}
+
+@media (max-width: 959px) {
+  .frame {
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .board {
+    height: calc(100vh - 20px);
+    width: calc(100vw - 20px);
+  }
+  .base-button {
+    text-shadow: 2px 2px 3px #000000;
+    opacity: 1;
+  }
+  a.base-button:hover {
+    font-size: 28px;
+  }
+  .card-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 110px;
+  }
+}
+
+@media (max-width: 599px) {
+  .board {
+    border: 0;
+  }
+  .card-img {
+    width: 60px;
+    height: 90px;
+  }
+  img.selectable:hover {
+    width: 60px;
+    height: 90px;
+  }
+  .hand-name {
+    font-size: 40px;
+  }
 }
 </style>
