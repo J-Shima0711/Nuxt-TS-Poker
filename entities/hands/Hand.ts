@@ -56,6 +56,10 @@ export abstract class Hand {
     }, [] as rankCountObj[])
   }
 
+  mostHighCard(): number {
+    return Math.max(...this.excludedDuplicatesRank())
+  }
+
   protected pieceCount(): number {
     return this.aggregationOfRank().reduce<number>((acc, cur) => {
       if (cur.count === 1) {

@@ -1,5 +1,7 @@
 <template>
-  <game-board></game-board>
+  <div class="back-ground">
+    <game-board></game-board>
+  </div>
 </template>
 
 <script lang="ts">
@@ -21,4 +23,13 @@ export default Vue.extend({
 })
 </script>
 
-<style></style>
+<style>
+.back-ground {
+  background-image: url('/images/body.jpg');
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

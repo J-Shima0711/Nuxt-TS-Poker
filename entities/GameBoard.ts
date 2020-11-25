@@ -11,6 +11,8 @@ import { Quads } from '~/entities/hands/Quads'
 import { StraightFlush } from '~/entities/hands/StraightFlush'
 import { RoyalFlush } from '~/entities/hands/RoyalFlush'
 import { Deck } from '~/entities/Deck'
+import { GameManager, GameStatus } from '~/entities/GameStatus'
+import { Result } from '~/entities/Result'
 
 const hands = [
   OnePair,
@@ -24,20 +26,15 @@ const hands = [
   RoyalFlush,
 ]
 
-export type GameStatus = 'BEFORE_START' | 'EXCHANGE_TIME' | 'SHOW_RESULT'
-export type Owner = 'CPU' | 'PLAYER'
-
 export class GameBoard {
-  public status: GameStatus
-  public readonly owner: { [key: string]: Owner } = {
-    cpu: 'CPU',
-    player: 'PLAYER',
-  } as const
-
+  private manager: GameManager
   private deck: Deck
+  renderKey: number
+
   constructor() {
-    this.status = 'BEFORE_START'
+    this.manager = new GameManager()
     this.deck = new Deck(false)
+    this.renderKey = Math.random()
   }
 
   makeHand(cards: Card[]): Hand {
@@ -50,15 +47,6 @@ export class GameBoard {
     }, new HighCard(cards))
   }
 
-  progressGame(): void {
-    this.status =
-      this.status === 'BEFORE_START'
-        ? 'EXCHANGE_TIME'
-        : this.status === 'EXCHANGE_TIME'
-        ? 'SHOW_RESULT'
-        : 'BEFORE_START'
-  }
-
   dealCard(num: number): Card[] {
     return this.deck.deal(num)
   }
@@ -68,7 +56,32 @@ export class GameBoard {
     return this.deck.deal(cards.length)
   }
 
-  collectCard(cards: Card[]): void {
-    this.deck.recovery(cards)
+  collectCard(cpuCards: Card[], playerCards: Card[]): void {
+    this.deck.recovery(cpuCards)
+    this.deck.recovery(playerCards)
+  }
+
+  progressGame(): void {
+    this.manager.progress()
+  }
+
+  nextGame(): void {
+    this.manager.nextGame()
+  }
+
+  status(): GameStatus {
+    return this.manager.status
+  }
+
+  getResult(judgementTarget: Hand, comparisonTarget: Hand) {
+    return new Result(judgementTarget, comparisonTarget).getResult()
+  }
+
+  sortHand(cards: Card[]): Card[] {
+    return cards.sort((a, b) => {
+      if (a.rank < b.rank) return -1
+      if (a.rank > b.rank) return 1
+      return 0
+    })
   }
 }

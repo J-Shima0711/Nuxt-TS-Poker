@@ -1,11 +1,13 @@
 <template>
   <div class="hand-area">
     <card-area
-      v-for="card in cards"
-      :key="card.suit + card.label"
+      v-for="(card, idx) in cards"
+      :key="card.suit + card.label + visible"
       :card="card"
-      :owner="owner"
-      :game-status="gameStatus"
+      :visible="visible"
+      :selectable="selectable"
+      :selected="selectedStates[idx]"
+      @click="propagationClick(idx)"
     />
   </div>
 </template>
@@ -14,7 +16,6 @@
 import Vue, { PropOptions } from 'vue'
 import CardArea from '~/components/atoms/CardArea.vue'
 import { Card } from '~/entities/CardIF'
-import { GameStatus, Owner } from '~/entities/GameBoard'
 
 export default Vue.extend({
   components: {
@@ -25,20 +26,32 @@ export default Vue.extend({
       type: Array,
       required: true,
     } as PropOptions<Card[]>,
-    owner: {
-      type: String,
+    visible: {
+      type: Boolean,
       required: true,
-    } as PropOptions<Owner>,
-    gameStatus: {
-      type: String,
+    },
+    selectable: {
+      type: Boolean,
       required: true,
-    } as PropOptions<GameStatus>,
+    },
+    selectedStates: {
+      type: Array,
+      required: true,
+    } as PropOptions<Boolean[]>,
   },
-  data() {
-    return {
-      selectedCards: [] as Card[],
-    }
+  methods: {
+    propagationClick(idx: number): void {
+      this.$emit('toggleSelect', idx)
+    },
   },
-  methods: {},
 })
 </script>
+
+<style>
+.hand-area {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px 0;
+}
+</style>
