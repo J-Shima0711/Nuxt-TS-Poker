@@ -25,7 +25,7 @@ export default Vue.extend({
 
 <style>
 .back-ground {
-  background-image: url('/images/body.jpg');
+  background-image: url('~assets/body.jpg');
   background-size: cover;
   height: 100vh;
   display: flex;
