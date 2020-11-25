@@ -57,6 +57,7 @@ export default Vue.extend({
   justify-content: center;
   width: 100px;
   height: 140px;
+  transition: 0.1s;
 }
 .card-img {
   width: 80px;

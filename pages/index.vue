@@ -81,4 +81,13 @@ export default Vue.extend({
     opacity: 0;
   }
 }
+
+@media (max-width: 599px) {
+  .title {
+    font-size: 48px;
+  }
+  .subtitle {
+    font-size: 24px;
+  }
+}
 </style>
