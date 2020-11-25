@@ -36,8 +36,8 @@ export default Vue.extend({
   computed: {
     cardImage(): string {
       return this.visible
-        ? `/images/${this.card.suit}${this.card.label}.png`
-        : '/images/back.png'
+        ? `./images/${this.card.suit}${this.card.label}.png`
+        : './images/back.png'
     },
   },
   methods: {

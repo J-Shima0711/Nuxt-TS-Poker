@@ -197,7 +197,7 @@ export default Vue.extend({
 
 <style>
 .frame {
-  background-image: url('/images/wood.png');
+  background-image: url('~assets/wood.png');
   width: 560px;
   padding: 20px;
   box-sizing: border-box;
@@ -216,7 +216,7 @@ export default Vue.extend({
   flex-direction: column;
   justify-content: space-around;
   box-sizing: border-box;
-  background-image: url('/images/board2.png');
+  background-image: url('~assets/board2.png');
 }
 .hand-name-area {
   height: 60px;
