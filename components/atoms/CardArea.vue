@@ -72,9 +72,4 @@ img.selectable:hover {
 .selected {
   background-color: rgba(144, 238, 144, 0.5);
 }
-@keyframes appear {
-  0% {
-    opacity: 0;
-  }
-}
 </style>

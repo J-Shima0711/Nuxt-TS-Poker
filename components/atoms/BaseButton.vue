@@ -24,6 +24,7 @@ export default Vue.extend({
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  animation: 0.1s appear;
 }
 a.base-button:hover {
   text-shadow: 2px 2px 3px #000000;
