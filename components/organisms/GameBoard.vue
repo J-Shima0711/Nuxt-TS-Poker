@@ -50,7 +50,7 @@
         <base-button
           v-if="gameBoard.status() === 'EXCHANGE_TIME'"
           class="sort-button"
-          @click="sortHand"
+          @click="sortPlayersHand"
         >
           Sort
         </base-button>
@@ -72,6 +72,7 @@ import { Hand } from '~/entities/hands/Hand'
 import BaseButton from '~/components/atoms/BaseButton.vue'
 import HandName from '~/components/atoms/HandName.vue'
 import ResultArea from '~/components/atoms/ResultArea.vue'
+import { Preloader } from '~/entities/Preloader'
 
 type textCenterButton = 'Game Start' | 'Ready ?' | 'Exchange' | 'Next Game'
 type textResult = 'WIN' | 'DRAW' | 'LOSE'
@@ -98,6 +99,7 @@ export default Vue.extend({
       ] as boolean[],
       cpuResult: {},
       playerResult: {},
+      preloader: {} as Preloader,
     }
   },
   computed: {
@@ -135,11 +137,17 @@ export default Vue.extend({
   created() {
     this.initialize()
   },
+  beforeMount() {
+    this.preload()
+  },
   methods: {
     initialize(): void {
       this.gameBoard = new GameBoard()
       this.cpuHand = this.gameBoard.dealCard(5)
       this.playerHand = this.gameBoard.dealCard(5)
+    },
+    preload(): void {
+      this.preloader = new Preloader()
     },
     centerButtonAction(): void {
       switch (this.gameBoard.status()) {
@@ -157,10 +165,13 @@ export default Vue.extend({
             this.handOfPlayer,
             this.handOfCPU
           )
+          this.sortCPUHand()
+          this.sortPlayersHand()
           this.gameBoard.progressGame()
           break
         case 'SHOW_RESULT':
           // this.gameBoard.collectCard(this.cpuHand, this.playerHand)
+          this.preload()
           this.initialize()
           this.gameBoard.nextGame()
       }
@@ -187,7 +198,10 @@ export default Vue.extend({
         !this.playerCardSelectedStates[idx]
       )
     },
-    sortHand(): void {
+    sortCPUHand(): void {
+      this.cpuHand = this.gameBoard.sortHand(this.cpuHand)
+    },
+    sortPlayersHand(): void {
       this.resetSelectedStates()
       this.playerHand = this.gameBoard.sortHand(this.playerHand)
     },
@@ -212,6 +226,7 @@ export default Vue.extend({
   width: 520px;
   padding: 5px;
   border: 5px inset rgba(115, 66, 41, 0.7);
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
