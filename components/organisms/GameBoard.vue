@@ -72,6 +72,7 @@ import { Hand } from '~/entities/hands/Hand'
 import BaseButton from '~/components/atoms/BaseButton.vue'
 import HandName from '~/components/atoms/HandName.vue'
 import ResultArea from '~/components/atoms/ResultArea.vue'
+import { Preloader } from '~/entities/Preloader'
 
 type textCenterButton = 'Game Start' | 'Ready ?' | 'Exchange' | 'Next Game'
 type textResult = 'WIN' | 'DRAW' | 'LOSE'
@@ -98,6 +99,7 @@ export default Vue.extend({
       ] as boolean[],
       cpuResult: {},
       playerResult: {},
+      preloader: {} as Preloader,
     }
   },
   computed: {
@@ -135,11 +137,17 @@ export default Vue.extend({
   created() {
     this.initialize()
   },
+  beforeMount() {
+    this.preload()
+  },
   methods: {
     initialize(): void {
       this.gameBoard = new GameBoard()
       this.cpuHand = this.gameBoard.dealCard(5)
       this.playerHand = this.gameBoard.dealCard(5)
+    },
+    preload(): void {
+      this.preloader = new Preloader()
     },
     centerButtonAction(): void {
       switch (this.gameBoard.status()) {
@@ -163,6 +171,7 @@ export default Vue.extend({
           break
         case 'SHOW_RESULT':
           // this.gameBoard.collectCard(this.cpuHand, this.playerHand)
+          this.preload()
           this.initialize()
           this.gameBoard.nextGame()
       }
