@@ -212,6 +212,7 @@ export default Vue.extend({
   width: 520px;
   padding: 5px;
   border: 5px inset rgba(115, 66, 41, 0.7);
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
