@@ -50,7 +50,7 @@
         <base-button
           v-if="gameBoard.status() === 'EXCHANGE_TIME'"
           class="sort-button"
-          @click="sortHand"
+          @click="sortPlayersHand"
         >
           Sort
         </base-button>
@@ -157,6 +157,8 @@ export default Vue.extend({
             this.handOfPlayer,
             this.handOfCPU
           )
+          this.sortCPUHand()
+          this.sortPlayersHand()
           this.gameBoard.progressGame()
           break
         case 'SHOW_RESULT':
@@ -187,7 +189,10 @@ export default Vue.extend({
         !this.playerCardSelectedStates[idx]
       )
     },
-    sortHand(): void {
+    sortCPUHand(): void {
+      this.cpuHand = this.gameBoard.sortHand(this.cpuHand)
+    },
+    sortPlayersHand(): void {
       this.resetSelectedStates()
       this.playerHand = this.gameBoard.sortHand(this.playerHand)
     },
