@@ -35,6 +35,12 @@ export default Vue.extend({
   components: {
     Logo,
   },
+  beforeMount() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+      setTimeout(() => this.$nuxt.$loading.finish(), 5000)
+    })
+  },
   mounted() {
     setTimeout(() => {
       this.$router.push('./PokerGame')

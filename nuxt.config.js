@@ -54,4 +54,6 @@ export default {
   router: {
     base: '/Nuxt-TS-Poker/',
   },
+
+  loading: '~/components/Loading.vue',
 }
