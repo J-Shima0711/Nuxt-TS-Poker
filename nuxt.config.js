@@ -55,5 +55,5 @@ export default {
     base: '/Nuxt-TS-Poker/',
   },
 
-  loading: '~/components/Loading.vue',
+  // loading: '~/components/Loading.vue',
 }

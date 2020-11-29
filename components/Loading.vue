@@ -1,3 +1,5 @@
+<!--現在未使用-->
+
 <template lang="html">
   <div v-if="loading" class="wrap">
     <div class="sk-chase">
@@ -27,7 +29,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .wrap {
   background: black;
   width: 100vw;

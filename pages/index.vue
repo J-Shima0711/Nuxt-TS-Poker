@@ -35,12 +35,6 @@ export default Vue.extend({
   components: {
     Logo,
   },
-  beforeMount() {
-    this.$nextTick(() => {
-      this.$nuxt.$loading.start()
-      setTimeout(() => this.$nuxt.$loading.finish(), 5000)
-    })
-  },
   mounted() {
     setTimeout(() => {
       this.$router.push('./PokerGame')
@@ -49,7 +43,7 @@ export default Vue.extend({
 })
 </script>
 
-<style>
+<style lang="scss">
 .container {
   animation: 2s appear;
   margin: 0 auto;
