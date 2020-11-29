@@ -54,32 +54,60 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+$card-width: 80px;
+$card-height: 120px;
+$card-width-sp: 60px;
+$card-height-sp: 90px;
+
 .card-area {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100px;
-  height: 140px;
+  width: $card-width + 20;
+  height: $card-height + 20;
   transition: 0.1s;
   &.selected {
     background-color: rgba(144, 238, 144, 0.5);
   }
 }
 .card-img {
-  width: 80px;
-  height: 120px;
-  background-size: 80px 120px;
+  width: $card-width;
+  height: $card-height;
+  background-size: 100% 100%;
   transition: all 0.1s ease 0s;
   animation: 0.3s appear;
   &.selectable:hover {
     cursor: pointer;
-    width: 88px;
-    height: 128px;
-    background-size: 88px 128px;
+    width: $card-width + 8;
+    height: $card-height + 8;
   }
   @each $card, $value in $cards {
     &.#{$card} {
       background-image: url(#{$value});
+    }
+  }
+}
+
+@media (max-width: 959px) {
+  .card-img {
+    &.selectable:hover {
+      width: $card-width;
+      height: $card-height;
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  .card-area {
+    width: $card-width-sp + 15;
+    height: $card-height-sp + 15;
+  }
+  .card-img {
+    width: $card-width-sp;
+    height: $card-height-sp;
+    &.selectable:hover {
+      width: $card-width-sp;
+      height: $card-height-sp;
     }
   }
 }

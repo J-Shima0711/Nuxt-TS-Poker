@@ -24,7 +24,7 @@
       </div>
       <div class="center-btn-area">
         <BaseButton
-          :key="centerButtonText"
+          :key="gameBoard.status()"
           class="center-button"
           @click="centerButtonAction"
         >
@@ -50,6 +50,7 @@
         <base-button
           v-if="gameBoard.status() === 'EXCHANGE_TIME'"
           class="sort-button"
+          :class="{ disabled: sorted }"
           @click="sortPlayersHand"
         >
           Sort
@@ -99,7 +100,7 @@ export default Vue.extend({
       ] as boolean[],
       cpuResult: {},
       playerResult: {},
-      // preloader: {} as Preloader,
+      sorted: false,
     }
   },
   computed: {
@@ -145,6 +146,7 @@ export default Vue.extend({
       this.gameBoard = new GameBoard()
       this.cpuHand = this.gameBoard.dealCard(5)
       this.playerHand = this.gameBoard.dealCard(5)
+      this.sorted = false
     },
     // preload(): void {
     //   this.preloader = new Preloader()
@@ -204,6 +206,7 @@ export default Vue.extend({
     sortPlayersHand(): void {
       this.resetSelectedStates()
       this.playerHand = this.gameBoard.sortHand(this.playerHand)
+      this.sorted = true
     },
   },
 })
@@ -250,7 +253,6 @@ export default Vue.extend({
   align-items: center;
 }
 .center-button {
-  font-size: 28px;
   font-style: italic;
   color: #ffffff;
   margin: auto;
@@ -260,12 +262,6 @@ export default Vue.extend({
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.sort-button {
-  text-align: center;
-  font-size: 28px;
-  color: #ffffff;
-  margin: auto;
 }
 
 @media (max-width: 959px) {
@@ -283,37 +279,11 @@ export default Vue.extend({
     height: calc(100vh - 20px);
     width: calc(100vw - 20px);
   }
-  .base-button {
-    text-shadow: 2px 2px 3px #000000;
-    opacity: 1;
-  }
-  a.base-button:hover {
-    font-size: 28px;
-  }
-  .card-area {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 80px;
-    height: 110px;
-  }
 }
 
 @media (max-width: 599px) {
   .board {
     border: 0;
-  }
-  .card-img {
-    width: 60px;
-    height: 90px;
-    background-size: 60px 90px;
-  }
-  img.selectable:hover {
-    width: 60px;
-    height: 90px;
-  }
-  .hand-name {
-    font-size: 40px;
   }
 }
 </style>

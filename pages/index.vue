@@ -76,12 +76,6 @@ export default Vue.extend({
   padding-top: 15px;
 }
 
-@keyframes appear {
-  0% {
-    opacity: 0;
-  }
-}
-
 @media (max-width: 599px) {
   .title {
     font-size: 48px;
