@@ -99,7 +99,7 @@ export default Vue.extend({
       ] as boolean[],
       cpuResult: {},
       playerResult: {},
-      preloader: {} as Preloader,
+      // preloader: {} as Preloader,
     }
   },
   computed: {
@@ -138,7 +138,7 @@ export default Vue.extend({
     this.initialize()
   },
   beforeMount() {
-    this.preload()
+    // this.preload()
   },
   methods: {
     initialize(): void {
@@ -146,9 +146,9 @@ export default Vue.extend({
       this.cpuHand = this.gameBoard.dealCard(5)
       this.playerHand = this.gameBoard.dealCard(5)
     },
-    preload(): void {
-      this.preloader = new Preloader()
-    },
+    // preload(): void {
+    //   this.preloader = new Preloader()
+    // },
     centerButtonAction(): void {
       switch (this.gameBoard.status()) {
         case 'BEFORE_START':
@@ -171,7 +171,7 @@ export default Vue.extend({
           break
         case 'SHOW_RESULT':
           // this.gameBoard.collectCard(this.cpuHand, this.playerHand)
-          this.preload()
+          // this.preload()
           this.initialize()
           this.gameBoard.nextGame()
       }
@@ -209,9 +209,9 @@ export default Vue.extend({
 })
 </script>
 
-<style>
+<style lang="scss">
 .frame {
-  background-image: url('~assets/wood.png');
+  background-image: url(#{$wood});
   width: 560px;
   padding: 20px;
   box-sizing: border-box;
@@ -231,7 +231,7 @@ export default Vue.extend({
   flex-direction: column;
   justify-content: space-around;
   box-sizing: border-box;
-  background-image: url('~assets/board2.png');
+  background-image: url(#{$board});
 }
 .hand-name-area {
   height: 60px;
@@ -306,6 +306,7 @@ export default Vue.extend({
   .card-img {
     width: 60px;
     height: 90px;
+    background-size: 60px 90px;
   }
   img.selectable:hover {
     width: 60px;

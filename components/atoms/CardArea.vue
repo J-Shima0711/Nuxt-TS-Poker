@@ -1,10 +1,8 @@
 <template>
   <div class="card-area" :class="{ selected }">
-    <img
+    <div
       class="card-img"
-      :class="{ selectable }"
-      :src="cardImage"
-      alt="カード"
+      :class="[cardName, { selectable }]"
       @click="onClick"
     />
   </div>
@@ -34,10 +32,15 @@ export default Vue.extend({
     },
   },
   computed: {
-    cardImage(): string {
+    // cardImage(): string {
+    //   return this.visible
+    //     ? `./images/${this.card.suit}${this.card.label}.png`
+    //     : './images/back.png'
+    // },
+    cardName(): string {
       return this.visible
-        ? `./images/${this.card.suit}${this.card.label}.png`
-        : './images/back.png'
+        ? `${this.card.suit.toLowerCase()}${this.card.label.toLowerCase()}`
+        : 'back'
     },
   },
   methods: {
@@ -50,7 +53,7 @@ export default Vue.extend({
 })
 </script>
 
-<style>
+<style lang="scss">
 .card-area {
   display: flex;
   align-items: center;
@@ -58,19 +61,26 @@ export default Vue.extend({
   width: 100px;
   height: 140px;
   transition: 0.1s;
+  &.selected {
+    background-color: rgba(144, 238, 144, 0.5);
+  }
 }
 .card-img {
   width: 80px;
   height: 120px;
+  background-size: 80px 120px;
   transition: all 0.1s ease 0s;
   animation: 0.3s appear;
-}
-img.selectable:hover {
-  cursor: pointer;
-  width: 88px;
-  height: 128px;
-}
-.selected {
-  background-color: rgba(144, 238, 144, 0.5);
+  &.selectable:hover {
+    cursor: pointer;
+    width: 88px;
+    height: 128px;
+    background-size: 88px 128px;
+  }
+  @each $card, $value in $cards {
+    &.#{$card} {
+      background-image: url(#{$value});
+    }
+  }
 }
 </style>

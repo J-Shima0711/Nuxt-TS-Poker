@@ -78,9 +78,9 @@ export default Vue.extend({
 })
 </script>
 
-<style>
+<style lang="scss">
 .back-ground {
-  background-image: url('~assets/body.jpg');
+  background-image: url(#{$body});
   background-size: cover;
   height: 100vh;
   display: flex;
