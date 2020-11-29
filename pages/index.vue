@@ -43,7 +43,7 @@ export default Vue.extend({
 })
 </script>
 
-<style>
+<style lang="scss">
 .container {
   animation: 2s appear;
   margin: 0 auto;

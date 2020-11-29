@@ -1,3 +1,5 @@
+// 現在未使用
+
 const sources: string[] = [
   './images/back.png',
   './images/C2.png',
