@@ -51,10 +51,4 @@ export default Vue.extend({
   content: 'DRAW';
   color: #00ff99;
 }
-
-@keyframes appear {
-  0% {
-    opacity: 0;
-  }
-}
 </style>

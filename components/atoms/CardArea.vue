@@ -1,10 +1,8 @@
 <template>
   <div class="card-area" :class="{ selected }">
-    <img
+    <div
       class="card-img"
-      :class="{ selectable }"
-      :src="cardImage"
-      alt="カード"
+      :class="[cardName, { selectable }]"
       @click="onClick"
     />
   </div>
@@ -34,10 +32,15 @@ export default Vue.extend({
     },
   },
   computed: {
-    cardImage(): string {
+    // cardImage(): string {
+    //   return this.visible
+    //     ? `./images/${this.card.suit}${this.card.label}.png`
+    //     : './images/back.png'
+    // },
+    cardName(): string {
       return this.visible
-        ? `./images/${this.card.suit}${this.card.label}.png`
-        : './images/back.png'
+        ? `${this.card.suit.toLowerCase()}${this.card.label.toLowerCase()}`
+        : 'back'
     },
   },
   methods: {
@@ -50,27 +53,62 @@ export default Vue.extend({
 })
 </script>
 
-<style>
+<style lang="scss">
+$card-width: 80px;
+$card-height: 120px;
+$card-width-sp: 60px;
+$card-height-sp: 90px;
+
 .card-area {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100px;
-  height: 140px;
+  width: $card-width + 20;
+  height: $card-height + 20;
   transition: 0.1s;
+  &.selected {
+    background-color: rgba(144, 238, 144, 0.5);
+  }
 }
 .card-img {
-  width: 80px;
-  height: 120px;
+  width: $card-width;
+  height: $card-height;
+  background-size: 100% 100%;
   transition: all 0.1s ease 0s;
   animation: 0.3s appear;
+  &.selectable:hover {
+    cursor: pointer;
+    width: $card-width + 8;
+    height: $card-height + 8;
+  }
+  @each $card, $value in $cards {
+    &.#{$card} {
+      background-image: url(#{$value});
+    }
+  }
 }
-img.selectable:hover {
-  cursor: pointer;
-  width: 88px;
-  height: 128px;
+
+@media (max-width: 959px) {
+  .card-img {
+    &.selectable:hover {
+      width: $card-width;
+      height: $card-height;
+    }
+  }
 }
-.selected {
-  background-color: rgba(144, 238, 144, 0.5);
+
+@media (max-width: 599px) {
+  .card-area {
+    width: $card-width-sp + 15;
+    height: $card-height-sp + 15;
+  }
+  .card-img {
+    width: $card-width-sp;
+    height: $card-height-sp;
+    &.selectable:hover {
+      width: $card-width-sp;
+      height: $card-height-sp;
+    }
+  }
 }
 </style>

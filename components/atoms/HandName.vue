@@ -24,12 +24,11 @@ export default Vue.extend({
 })
 </script>
 
-<style>
+<style lang="scss">
 .hand-name {
   font-family: 'Abril Fatface', cursive;
   font-size: 48px;
   text-shadow: 2px 2px 3px #000000;
-  color: #f9cd0b;
   padding: 0 15px;
   height: 60px;
   display: flex;
@@ -39,23 +38,20 @@ export default Vue.extend({
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  &.low {
+    color: #66ff66;
+  }
+  &.middle {
+    color: #ffcc33;
+  }
+  &.high {
+    color: #ffff33;
+  }
 }
 
-.low {
-  color: #66ff66;
-}
-
-.middle {
-  color: #ffcc33;
-}
-
-.high {
-  color: #ffff33;
-}
-
-@keyframes appear {
-  0% {
-    opacity: 0;
+@media (max-width: 599px) {
+  .hand-name {
+    font-size: 40px;
   }
 }
 </style>
